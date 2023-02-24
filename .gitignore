@@ -1,0 +1,25 @@
+# Ignore every extensions
+*.*
+# Except these extensions
+!*.gitignore
+!*.md
+!*.txt
+!*.h
+!*.c
+!*.cpp
+!*.mk
+!*.vhd
+!*.xdc
+!*.png
+!*.code-workspace
+
+# Ignore everything these directories
+build/*
+tests_cpp/build/*
+s4InfoAtelier4/*
+# Ecept these directories
+# C++
+!/s4InfoAtelier4/project/
+# VHDL
+!/s4InfoAtelier4/s4InfoAtelier4.sim/
+!/s4InfoAtelier4/s4InfoAtelier4.srcs/

@@ -1,0 +1,10 @@
+{
+	"folders": [
+		{	"path": "."								},
+		{	"path": "./s4InfoAtelier4/project/src"	},
+		{	"path": "./tests_cpp"					},
+		{	"path": "./outils"						},
+		{	"path": "./tiles_images"				},
+	],
+	"settings": {}
+}
