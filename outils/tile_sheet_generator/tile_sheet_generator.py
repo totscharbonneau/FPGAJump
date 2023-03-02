@@ -19,14 +19,14 @@ def write_to_file_pixelmap_color_code_from_img(img_dir, name) -> None:
         w = 0
         h = 0
         for image in images:
-            write_to_file(get_16x16_RGB_pixel_map(image.load()), name + '_'+str(w)+'_'+str(h))
+            write_to_file(get_16x16_RGB_pixel_map(image.load()), name + ' '+str(w)+' '+str(h) + ' :')
             if w == width:
                 w = 0
                 h += 16
             else:
                 w += 16
     else:
-        write_to_file(get_16x16_RGB_pixel_map(img.load()), name)
+        write_to_file(get_16x16_RGB_pixel_map(img.load()), name + ' 0 0 :')
 
 # return the RGB pixel map on 9 bits, but it must be in 16x16 pixel format
 def get_16x16_RGB_pixel_map(img_pixel_map):

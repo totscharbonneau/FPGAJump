@@ -17,17 +17,18 @@ enable_testing()
 
 # Compile all cpp files as a lib
 set(headers
-  ../s4InfoAtelier4/project/src/test_alex.h
+  ../s4InfoAtelier4/project/src/tile_sheet/tile_sheet.h
+  ../s4InfoAtelier4/project/src/constants.h
+  ../s4InfoAtelier4/project/src/structs.h
 )
 set(sources
-  ../s4InfoAtelier4/project/src/test_alex.cpp
+  ../s4InfoAtelier4/project/src/tile_sheet/tile_sheet.cpp
 )
 add_library(cpp_lib ${sources} ${headers})
 
 # Compile all tests files as an executable
 set(test_files
-  test_example1.cpp
-  test_example2.cpp
+  test_tile_sheet.cpp
 )
 add_executable(all_unit_tests ${test_files})
 
