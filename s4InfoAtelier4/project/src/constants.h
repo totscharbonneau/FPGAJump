@@ -4,9 +4,12 @@
 #include <string>
 #include <map>
 
-const int TILE_SIZE = 16;
-const int MAX_TILE_IN_BACKGROUND = 256;
+const int INVALID_TILE_ID = -1;
 
+const int TILE_SIZE = 16;
+const int MAX_TILE_SIZE_BACKGROUND = 64;
+
+const int NUMBER_OF_TILE_TYPE = 6;
 enum tile_type 
 {
     WRONG_TILE              = -1,
