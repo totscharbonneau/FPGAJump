@@ -1,5 +1,17 @@
 # FPGAJump
 
+# Procedure to export bitstream to Vitis
+--- In Vivado ---
+1.  Generate bitstream
+2.  File -> Export -> Export hardware -> `include bitstream`
+3.  Tools -> Launch Vitis
+--- In Vitis ---
+4.  Right click ont the wrapper -> Update hardware specifications
+5.  Right click the wrapper -> Build project
+6.  Right click on project -> Build project
+7.  Right click on project_system -> Program device
+8.  Right click on project -> Run as -> 1
+
 # Format d'encodage
                     Tile_export
 Opcode	Position X	Position Y	Color id	Tile id
