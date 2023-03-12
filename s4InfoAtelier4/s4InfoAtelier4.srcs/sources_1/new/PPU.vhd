@@ -40,7 +40,12 @@ architecture Behavioral of PPU is
      end component;
      
     component tile_export is
-     Port ( i_data : in STD_LOGIC_VECTOR (27 downto 0);
+     Port (i_clk : in STD_LOGIC;
+           i_pos_x : in STD_LOGIC_VECTOR (3 downto 0);
+           i_pos_y : in STD_LOGIC_VECTOR (3 downto 0);
+           i_color_id : in STD_LOGIC_VECTOR (8 downto 0);
+           i_tile_id : in STD_LOGIC_VECTOR (7 downto 0);
+           o_color_id : out STD_LOGIC_VECTOR (8 downto 0);
            i_en : in STD_LOGIC
            );
      end component;
@@ -96,7 +101,11 @@ begin
     
     inst_tile_export_process : tile_export
     Port map (
-        i_data => i_data,
+        i_clk => clk,
+        i_pos_x => i_data(26 downto 23),
+        i_pos_y => i_data(22 downto 19),
+        i_color_id => i_data(18 downto 10),
+        i_tile_id => i_data(9 downto 2),
         i_en => v_enreg(1)
     );
     
