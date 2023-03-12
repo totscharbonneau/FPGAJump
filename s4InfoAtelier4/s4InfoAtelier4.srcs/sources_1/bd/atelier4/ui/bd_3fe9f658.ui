@@ -1,13 +1,13 @@
 {
    "ActiveEmotionalView":"Default View",
    "Default View_Layers":"/Net:true|/clk_in1_0_1:true|/clk_wiz_0_clk_out1:true|/processing_system7_0_FCLK_RESET0_N:true|/reset_0_1:true|/proc_sys_reset_0_peripheral_aresetn:true|",
-   "Default View_ScaleFactor":"0.471926",
-   "Default View_TopLeft":"-199,-121",
+   "Default View_ScaleFactor":"0.334517",
+   "Default View_TopLeft":"-188,-188",
    "Display-PortTypeClock":"true",
    "Display-PortTypeOthers":"true",
    "Display-PortTypeReset":"true",
    "ExpandedHierarchyInLayout":"",
-   "guistr":"# # String gsaved with Nlview 7.0r6  2020-01-29 bk=1.5227 VDI=41 GEI=36 GUI=JA:10.0 non-TLS
+   "guistr":"# # String gsaved with Nlview 7.0r6  2020-01-29 bk=1.5227 VDI=41 GEI=36 GUI=JA:10.0 non-TLS-threadsafe
 #  -string -flagsOSRD
 preplace port hdmi_out -pg 1 -lvl 7 -x 2800 -y 280 -defaultsOSRD
 preplace port DDR -pg 1 -lvl 7 -x 2800 -y 510 -defaultsOSRD

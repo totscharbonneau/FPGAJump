@@ -41,40 +41,40 @@ entity viewport_coord_parser is
 end viewport_coord_parser;
 
 architecture Behavioral of viewport_coord_parser is
-constant WIDTH : integer := 640;
-constant HEIGHT : integer := 360;
+constant WIDTH : integer := 640; --640
+constant HEIGHT : integer := 360; -- 360
 signal row, col : integer := 0;
+signal looping : boolean := false;
+
 
 begin
 process(i_clk)
 begin
     if rising_edge(i_clk) then
-        if col < WIDTH then
-        
-            col <= col + 1;
-        else
-            col <= 0;
-            row <= row + 1;
-            if row = WIDTH -1 then
-            
-    
-    end if;
-    
-
-
-
-    if rising_edge(i_clk) then
-        for x in 0 to WIDTH-1 loop
-            for y in 0 to HEIGHT-1 loop
-            o_x <= std_logic_vector(to_unsigned(x,10));
-            o_y <= std_logic_vector(to_unsigned(y,8));
-            end loop;
-        end loop;
-        
-        o_coord_parser_end <= '1';
+        if looping then
+         if col < WIDTH then
+              o_x <= std_logic_vector(to_unsigned(col,10));
+              o_y <= std_logic_vector(to_unsigned(row,8));
+             col <= col + 1;
+         else
+             col <= 0;
+             row <= row + 1;
+          end if;
+            if row = HEIGHT -1 and col = WIDTH - 1 then
+             o_coord_parser_end <= '1';
+             col <= 0;
+             row <= 0;
+             looping <= false;
+          end if;
+          elsif i_endtick = '1' then
+                looping <= true;
+                col <= 0;
+                row <= 0;
+                o_coord_parser_end <= '0';
+        end if;
      end if;
-end process;
     
+end process;
 
 
 end Behavioral;
