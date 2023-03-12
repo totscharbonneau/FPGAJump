@@ -69,6 +69,29 @@ architecture Behavioral of PPU is
      );
      end component;
     
+    component coord_background_to_pixelmap is
+    Port ( i_coord_backgroundX : in STD_LOGIC_VECTOR (9 downto 0);
+           i_coord_backgroundY : in STD_LOGIC_VECTOR (9 downto 0);
+           o_coord_pixelmap_backX : out STD_LOGIC_VECTOR (3 downto 0);
+           o_coord_pixelmap_backY : out STD_LOGIC_VECTOR (3 downto 0));
+    end component;
+    
+    component get_tileID_from_coord_background is
+    port ( i_coord_backgroundX : in STD_LOGIC_VECTOR (9 downto 0);
+           i_coord_backgroundY : in STD_LOGIC_VECTOR (9 downto 0);
+           --i_registre_tile_id
+           o_tileID : out STD_LOGIC_VECTOR (7 downto 0));
+    end component;
+   
+   component get_background_color_code is
+   Port ( i_tileID : in STD_LOGIC_VECTOR (7 downto 0);
+           i_coord_pixelmap_backX : in STD_LOGIC_VECTOR (3 downto 0);
+           i_coord_pixelmap_backY : in STD_LOGIC_VECTOR (3 downto 0);
+           --i_tile_register 
+           o_background_color_code : out STD_LOGIC_VECTOR (8 downto 0));
+   end component;        
+    
+   
     signal i_data : std_logic_vector(27 downto 0);
     signal i_upcode : std_logic_vector(3 downto 0);
     signal v_enreg : std_logic_vector(15 downto 0);
@@ -77,6 +100,10 @@ architecture Behavioral of PPU is
     signal s_coord_parser_end : std_logic;
     signal s_coord_backgroundX : std_logic_vector (9 downto 0);
     signal s_coord_backgroundY : std_logic_vector (9 downto 0);
+    signal s_coord_pixelmap_backX : std_logic_vector (3 downto 0);
+    signal s_coord_pixelmap_backY : std_logic_vector (3 downto 0);
+    signal s_tileID : std_logic_vector (7 downto 0);
+    signal s_background_color_code : std_logic_vector (8 downto 0);
     
 begin
 
@@ -126,6 +153,29 @@ begin
         i_liveY => s_coord_viewportY,
         o_coordbackgroundX => s_coord_backgroundX,
         o_coordbackgroundY => s_coord_backgroundY
+    );
+    
+    inst_coord_background_to_pixelmap : coord_background_to_pixelmap
+    Port map (
+        i_coord_backgroundX => s_coord_backgroundX,
+        i_coord_backgroundY => s_coord_backgroundY,
+        o_coord_pixelmap_backX => s_coord_pixelmap_backX,
+        o_coord_pixelmap_backY => s_coord_pixelmap_backY
+    );
+    
+    inst_get_tileID_from_coord_background : get_tileID_from_coord_background
+    Port map (
+        i_coord_backgroundX => s_coord_backgroundX,
+        i_coord_backgroundY => s_coord_backgroundY,
+        o_tileID => s_tileID
+    );
+    
+    inst_get_background_color_code : get_background_color_code
+    Port map (
+        i_tileID => s_tileID,
+        i_coord_pixelmap_backX => s_coord_pixelmap_backX,
+        i_coord_pixelmap_backY => s_coord_pixelmap_backY,
+        o_background_color_code => s_background_color_code
     );
     
 end Behavioral;
