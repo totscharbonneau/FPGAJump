@@ -1,32 +1,18 @@
 from PIL import Image
 
+tile_id = 0
 tiles_images_dir = "../tiles_images/"
-generated_tiles_name = "generated_tiles.txt"
-file = open(tiles_images_dir + generated_tiles_name, 'w')
+generated_tiles_name = "generated_c_code.txt"
+file = open(generated_tiles_name, 'w')
 
 # Convert hex color to 9 bits color code (3 bits for r, g and b)
 def hex_to_9bits(r, g, b):
     return (r//32 << 6 | g//32 << 3 | b//32)
 
 # write 16x16 tiles color code to file
-def write_to_file_pixelmap_color_code_from_img(img_dir, name) -> None:
+def write_to_file_pixelmap_color_code_from_img(img_dir, name):
     img = Image.open(tiles_images_dir + img_dir)
-    width, height = img.size
-    
-    # Only for background
-    if name == 'background':
-        images = image_to_16x16_tiles(width, height, img)
-        w = 0
-        h = 0
-        for image in images:
-            write_to_file(get_16x16_RGB_pixel_map(image.load()), name + '_'+str(w)+'_'+str(h))
-            if w == width:
-                w = 0
-                h += 16
-            else:
-                w += 16
-    else:
-        write_to_file(get_16x16_RGB_pixel_map(img.load()), name)
+    write_to_file(get_16x16_RGB_pixel_map(img.load()), name)
 
 # return the RGB pixel map on 9 bits, but it must be in 16x16 pixel format
 def get_16x16_RGB_pixel_map(img_pixel_map):
@@ -38,17 +24,18 @@ def get_16x16_RGB_pixel_map(img_pixel_map):
     return RGB_pixel_map
 
 # writes all 16x16 tiles to a single file. Format : Name - 16x16 RGB data - ; (end)
-def write_to_file(pixel_map, name) -> None:
-    file.write(name + '\n')
+def write_to_file(pixel_map, name):
+    global tile_id
+    file.write("// " + name + " " + str(tile_id) + "\n")
     index = 0
     for data in pixel_map:
-        if index == 15:
-            file.write((str(data)) + '\n')
-            index = 0
-        else:
-            file.write((str(data)) + ' ')
-            index += 1
-    file.write(';\n')
+        ending = " "
+        if (index % 15) == 0 and index != 0:
+            ending = "\n"
+        file.write("this->pixelmap[" + str(index) + "] = " + str(data) + ";" + ending)
+        index += 1    
+    file.write("set_element_tile_id(tile_associator, " + str(tile_id) + ", " + name + ");\n")
+    tile_id += 1
 
 # Convert bigger image to a list of 16x16 images
 def image_to_16x16_tiles(width, height, img):
@@ -60,17 +47,36 @@ def image_to_16x16_tiles(width, height, img):
     
 # Add new tiles here
 def main():
-    tiles_dir = [
-        'player/player.png', 'platform/left/platform_left.png',
-        'platform/mid/platform_mid.png', 'platform/one_tile/platform_one_tile.png',
-        'platform/right/platform_right.png', 'background/background.png'
-    ]
-    write_to_file_pixelmap_color_code_from_img(tiles_dir[0], 'player')
-    write_to_file_pixelmap_color_code_from_img(tiles_dir[1], 'platform_left')
-    write_to_file_pixelmap_color_code_from_img(tiles_dir[2], 'platform_mid')
-    write_to_file_pixelmap_color_code_from_img(tiles_dir[3], 'platform_one_tile')
-    write_to_file_pixelmap_color_code_from_img(tiles_dir[4], 'platform_right')
-    write_to_file_pixelmap_color_code_from_img(tiles_dir[5], 'background')
+    write_to_file_pixelmap_color_code_from_img('player/player.png', 
+                                               'PLAYER_TILE')
+    write_to_file_pixelmap_color_code_from_img('platform/left/platform_left.png',
+                                               'PLATFORM_LEFT_TILE')
+    write_to_file_pixelmap_color_code_from_img('platform/mid/platform_mid.png',
+                                               'PLATFORM_MID_TILE')
+    write_to_file_pixelmap_color_code_from_img('platform/one_tile/platform_one_tile.png', 
+                                               'PLATFORM_RIGHT_TILE')
+    write_to_file_pixelmap_color_code_from_img('platform/right/platform_right.png',
+                                               'PLATFORM_ONE_TILE')
+    write_to_file_pixelmap_color_code_from_img('background/background_0.png',
+                                               'BACKGROUND_TILE')
+    write_to_file_pixelmap_color_code_from_img('background/background_1.png',
+                                               'BACKGROUND_TILE')
+    write_to_file_pixelmap_color_code_from_img('background/background_2.png',
+                                               'BACKGROUND_TILE')
+    write_to_file_pixelmap_color_code_from_img('background/background_3.png',
+                                               'BACKGROUND_TILE')
+    write_to_file_pixelmap_color_code_from_img('background/background_4.png',
+                                               'BACKGROUND_TILE')
+    write_to_file_pixelmap_color_code_from_img('background/background_5.png',
+                                               'BACKGROUND_TILE')
+    write_to_file_pixelmap_color_code_from_img('background/background_6.png',
+                                               'BACKGROUND_TILE')
+    write_to_file_pixelmap_color_code_from_img('background/background_7.png',
+                                               'BACKGROUND_TILE')
+    write_to_file_pixelmap_color_code_from_img('background/background_8.png',
+                                               'BACKGROUND_TILE')
+    write_to_file_pixelmap_color_code_from_img('background/background_9.png',
+                                               'BACKGROUND_TILE')
     if not file.closed:
         file.close()
     
