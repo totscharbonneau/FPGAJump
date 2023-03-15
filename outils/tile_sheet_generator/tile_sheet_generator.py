@@ -1,6 +1,6 @@
 from PIL import Image
 
-tile_id = 0
+tile_id = 1
 tiles_images_dir = "../tiles_images/"
 generated_tiles_name = "generated_c_code.txt"
 file = open(generated_tiles_name, 'w')
