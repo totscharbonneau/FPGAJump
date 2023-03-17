@@ -34,7 +34,8 @@ def write_to_file(pixel_map, name):
             ending = "\n"
         file.write("this->pixelmap[" + str(index) + "] = " + str(data) + ";" + ending)
         index += 1    
-    file.write("set_element_tile_id(tile_associator, " + str(tile_id) + ", " + name + ");\n")
+    file.write("set_element_tile_id(tile_id_list, " + str(tile_id) + ", " + name + ");\n")
+    file.write("send_tile_export(api, " + str(tile_id) + ", this->pixelmap);\n")
     tile_id += 1
 
 # Convert bigger image to a list of 16x16 images
